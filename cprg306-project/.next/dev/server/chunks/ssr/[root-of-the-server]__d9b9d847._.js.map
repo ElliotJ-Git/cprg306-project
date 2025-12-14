@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///C:/cprg306/cprg306project/cprg306-project/app/sheets/create/page.js"],"sourcesContent":["\r\nexport default function Home() {\r\n\r\nreturn (\r\n<main className=\"min-h-screen bg-gray-800\">\r\n    <div className=\"mb-8 pt-4 flex flex-col\">\r\n        <div className=\"mb-4 flex pl-8\">\r\n            <p className=\"font-serif text-sm\">Welcome to my CPRG306-Project</p>\r\n        </div>\r\n\r\n        <div className=\"mb-4 items-center flex flex-col\">\r\n            <h1 className=\"font-serif text-6xl font-bold text-emerald-600 p-3 hover:text-emerald-400 cursor-pointer\" onClick={changeToHome}>Questlet</h1>\r\n            <p className=\"font-serif text-s font-bold text-gray-300 ml-2\">Your guide through Dungeons and Dragons</p>\r\n        </div>\r\n    </div>\r\n</main>\r\n        );        \r\n}"],"names":[],"mappings":";;;;;;AACe,SAAS;IAExB,qBACA,sRAAC;QAAK,WAAU;kBACZ,cAAA,sRAAC;YAAI,WAAU;;8BACX,sRAAC;oBAAI,WAAU;8BACX,cAAA,sRAAC;wBAAE,WAAU;kCAAqB;;;;;;;;;;;8BAGtC,sRAAC;oBAAI,WAAU;;sCACX,sRAAC;4BAAG,WAAU;4BAA2F,SAAS;sCAAc;;;;;;sCAChI,sRAAC;4BAAE,WAAU;sCAAiD;;;;;;;;;;;;;;;;;;;;;;;AAK1E"}}]
+}
