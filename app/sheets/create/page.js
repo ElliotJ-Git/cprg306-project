@@ -512,7 +512,7 @@ export default function Home() {
                 value={name}
                 onChange={e => setName(e.target.value)}
                 />
-                <div className="flex flex-col">
+                <div className="flex flex-col items-center">
                     <Select label="Race" value={charRace} onChange={setCharRace} options={races} />
                     <Select label="Class" value={charClass} onChange={setCharClass} options={classes} />
                     <Select label="Background" value={charBackground} onChange={setCharBackground} options={backgrounds} />
@@ -549,7 +549,7 @@ export default function Home() {
                             </div>
                         )}
                     </div>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col items-center">
                         {charBackground === "Custom Background" && (
                             <SkillSelect
                                 skills={allSkills}
