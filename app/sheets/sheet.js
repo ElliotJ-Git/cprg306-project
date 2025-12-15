@@ -2,12 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import characterSheet from "./characterSheet";
+import characterCard from "./characterCard";
 
 export default function monster() {
     const router = useRouter();
     const [characters, setcharacters] = useState([]);
     const [search, setSearch] = useState("");
+
+    useEffect(() => {
+        const saved = JSON.parse(localStorage.getItem("characters") || "[]");
+        setCharacters(saved);
+    }, []);
 
     const filteredCharacters = characters
         .filter((character) =>
@@ -38,7 +43,7 @@ export default function monster() {
                     <p className="text-8xl">+</p>
                 </li>
                 {filteredCharacters.map((character) => (
-                    <characterSheet key={character.index} character={character} />
+                    <characterCard key={character.id} character={character} />
                 ))}
             </ul>
         </div>

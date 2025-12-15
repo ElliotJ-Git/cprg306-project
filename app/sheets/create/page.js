@@ -150,6 +150,14 @@ export default function Home() {
     }
 
     useEffect(() => {
+        const user = localStorage.getItem("username");
+        if (!user) {
+            router.push("/login");
+        }
+    }, [router]);
+
+
+    useEffect(() => {
         getAllRaces().then(data => {
             const normalized = data.map(r => ({
                 index: r.index,
@@ -764,7 +772,27 @@ export default function Home() {
                     </button>
 
                     <button
-                        onClick={() => console.log("SAVE CHARACTER HERE")}
+                        onClick={async () => {
+                            const character = {
+                                name,
+                                race: charRace,
+                                class: charClass,
+                                background: charBackground,
+                                level,
+                                abilities: finalAbilities,
+                                skills: allSkillRows,
+                            };
+
+                            await fetch("/api/characters/save", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                username: localStorage.getItem("username"), 
+                                character,
+                                }),
+                            });
+
+                        }}
                         className="px-4 py-2 bg-amber-600 rounded font-bold hover:bg-amber-500"
                     >
                         Save Character

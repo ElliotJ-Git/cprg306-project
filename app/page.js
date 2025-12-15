@@ -1,14 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Spell from "./spells/spell";
 import Monster from "./monsters/monster";
 import Sheet from "./sheets/sheet";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-
+  const router = useRouter();
   const [menu, setMenuBy] = useState("home");
+  const [username, setUsername] = useState(null);
 
+  useEffect(() => {
+    setUsername(localStorage.getItem("username"));
+  }, []);
   function menuDisplay(){
     if(menu === "spell"){
       return (
@@ -49,11 +54,30 @@ export default function Home() {
     handleMenuChange({target: $select});
   };
 
+   function handleClick() {
+    if (username) {
+      localStorage.removeItem("username");
+      setUsername(null);
+      router.push("/login");
+    } else {
+      router.push("/login");
+    }
+  }
+
   return (
     <main className="min-h-screen bg-gray-800">
       <div className="mb-8 pt-4 flex flex-col">
         <div className="mb-4 flex pl-8">
           <p className="font-serif text-sm">Welcome to my CPRG306-Project</p>
+          <button
+            onClick={handleClick}
+            className="text-sm w-20 text-amber-600 fixed right-10 p-4 m-4
+                      border-2 rounded-2xl border-black bg-slate-600
+                      hover:text-amber-500 hover:bg-slate-500"
+          >
+            {username ? "Logout" : "Login"}
+          </button>
+
         </div>
 
           <div className="flex">
