@@ -785,12 +785,15 @@ export default function Home() {
 
                             await fetch("/api/characters/save", {
                                 method: "POST",
-                                headers: { "Content-Type": "application/json" },
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
                                 body: JSON.stringify({
-                                username: localStorage.getItem("username"), 
-                                character,
+                                    username,
+                                    character,
                                 }),
                             });
+
 
                         }}
                         className="px-4 py-2 bg-amber-600 rounded font-bold hover:bg-amber-500"
