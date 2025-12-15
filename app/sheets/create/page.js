@@ -520,9 +520,7 @@ export default function Home() {
                         <Select label="Race" value={charRace} onChange={setCharRace} options={races} />
                         <Select label="Class" value={charClass} onChange={setCharClass} options={classes} />
                         <Select label="Background" value={charBackground} onChange={setCharBackground} options={backgrounds} />
-                    </div>
 
-                    <div className="flex flex-row gap-4">
                         {charRace === "Custom Lineage" && (
                             <div className="border-2 border-black p-4 m-4 rounded-2xl w-80 text-center">
                                 <p className="text-amber-400 font-semibold mb-2">Custom Lineage</p>
@@ -552,9 +550,9 @@ export default function Home() {
                                     </select>
                                 )}
                             </div>
-
                         )}
-
+                    </div>
+                    <div>
                         {charBackground === "Custom Background" && (
                             <SkillSelect
                                 skills={allSkills}
