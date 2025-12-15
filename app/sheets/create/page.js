@@ -552,7 +552,7 @@ export default function Home() {
                 value={name}
                 onChange={e => setName(e.target.value)}
                 />
-                <div className="flex flex-row">
+                <div className="flex flex-row items-center">
                     <div className="flex flex-col items-center">
                         <Select label="Race" value={charRace} onChange={setCharRace} options={races} />
                         <Select label="Class" value={charClass} onChange={setCharClass} options={classes} />
