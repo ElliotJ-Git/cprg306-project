@@ -27,6 +27,8 @@ export default function Home() {
     const [name, setName] = useState("");
     const [charRace, setCharRace] = useState("");
     const [charClass, setCharClass] = useState("");
+    const [raceDetails, setRaceDetails] = useState(null);
+
     const [charBackground, setCharBackground] = useState("");
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [skillsToChoose, setSkillsToChoose] = useState(0);
@@ -157,6 +159,8 @@ export default function Home() {
             setRaces([...normalized, CUSTOM_RACE]);
         });
 
+        
+
         getAllBackgrounds().then(data => {
             const normalized = data.map(b => ({
                 index: b.index,
@@ -168,6 +172,24 @@ export default function Home() {
 
         getAllClasses().then(setClasses);
     }, []); 
+
+    useEffect(() => {
+        if (!charRace || charRace === "Custom Lineage") {
+            setRaceDetails(null);
+            return;
+        }
+
+        const raceIndex = races.find(r => r.name === charRace)?.index;
+        if (!raceIndex) return;
+
+        fetch(`https://www.dnd5eapi.co/api/2014/races/${raceIndex}`)
+            .then(res => res.json())
+            .then(data => {
+                setRaceDetails(data);
+            })
+            .catch(console.error);
+    }, [charRace, races]);
+
 
     useEffect(() => {
         if (!charClass) return;
@@ -238,12 +260,30 @@ export default function Home() {
     }, [abilityMethod]);
 
     useEffect(() => {
-        if (charRace === "Custom Lineage" && customRaceASI) {
-            setRacialBonuses({ [customRaceASI]: 2 });
-        } else {
-            setRacialBonuses({});
+        if (charRace === "Custom Lineage") {
+            if (customRaceASI) {
+                setRacialBonuses({ [customRaceASI]: 2 });
+            } else {
+                setRacialBonuses({});
+            }
+            return;
         }
-    }, [charRace, customRaceASI]);
+
+        if (!raceDetails?.ability_bonuses) {
+            setRacialBonuses({});
+            return;
+        }
+
+        const bonuses = {};
+
+        raceDetails.ability_bonuses.forEach(bonus => {
+            const stat = bonus.ability_score.name;
+            bonuses[stat] = bonus.bonus;
+        });
+
+        setRacialBonuses(bonuses);
+    }, [charRace, raceDetails, customRaceASI]);
+
 
     useEffect(() => {
         getClassDetails("bard")
@@ -350,15 +390,12 @@ export default function Home() {
             setAbilities(prev => {
                 newValue = Number(newValue);
 
-                // Find the stat currently using the selected value
                 const swapStat = Object.keys(prev).find(
                     key => key !== stat && prev[key] === newValue
                 );
 
-                // Clone abilities
                 const updated = { ...prev };
 
-                // Swap values if needed
                 if (swapStat) {
                     updated[swapStat] = prev[stat];
                 }
@@ -516,7 +553,7 @@ export default function Home() {
                 onChange={e => setName(e.target.value)}
                 />
                 <div className="flex flex-row">
-                    <div className="flex flex-col">
+                    <div className="flex flex-col items-center">
                         <Select label="Race" value={charRace} onChange={setCharRace} options={races} />
                         <Select label="Class" value={charClass} onChange={setCharClass} options={classes} />
                         <Select label="Background" value={charBackground} onChange={setCharBackground} options={backgrounds} />
@@ -772,7 +809,7 @@ function Select({ label, value, onChange, options }) {
             <select
                 value={value}
                 onChange={e => onChange(e.target.value)}
-                className="p-4 bg-slate-800 rounded text-center cursor-pointer border-2 border-black"
+                className="p-4 bg-slate-800 rounded text-center items-center cursor-pointer border-2 border-black"
             >
                 <option value="">Select {label}</option>
 
