@@ -505,62 +505,63 @@ export default function Home() {
     function toNext() {
         if (currentPage === "home") {
         return (
-            <div className="flex flex-row items-center">
+            <div className="flex flex-col items-center">
                 <input
                 className="w-80 p-2 bg-gray-700 rounded border-2 border-black text-white"
                 placeholder="Character Name"
                 value={name}
                 onChange={e => setName(e.target.value)}
                 />
-                <div className="flex flex-col items-center">
-                    <Select label="Race" value={charRace} onChange={setCharRace} options={races} />
-                    <Select label="Class" value={charClass} onChange={setCharClass} options={classes} />
-                    <Select label="Background" value={charBackground} onChange={setCharBackground} options={backgrounds} />
+                <div className="flex flex-row">
+                    <div className="flex flex-col items-center">
+                        <Select label="Race" value={charRace} onChange={setCharRace} options={races} />
+                        <Select label="Class" value={charClass} onChange={setCharClass} options={classes} />
+                        <Select label="Background" value={charBackground} onChange={setCharBackground} options={backgrounds} />
 
-                    <div className="flex flex-row gap-4">
-                        {charRace === "Custom Lineage" && (
-                            <div className="border-2 border-black p-4 m-4 rounded-2xl w-80 text-center">
-                                <p className="text-amber-400 font-semibold mb-2">Custom Lineage</p>
-
-
-                                <select value={customRaceASI} onChange={e => setCustomRaceASI(e.target.value)} className="p-2 bg-slate-800 rounded w-full mb-2">
-                                    <option value="">+2 Ability Score</option>
-                                    {Object.keys(abilities).map(stat => (
-                                    <option key={stat} value={stat}>{stat}</option>
-                                    ))}
-                                </select>
+                        <div className="flex flex-row gap-4">
+                            {charRace === "Custom Lineage" && (
+                                <div className="border-2 border-black p-4 m-4 rounded-2xl w-80 text-center">
+                                    <p className="text-amber-400 font-semibold mb-2">Custom Lineage</p>
 
 
-                                <select value={customRaceTrait} onChange={e => setCustomRaceTrait(e.target.value)} className="p-2 bg-slate-800 rounded w-full mb-2">
-                                    <option value="">Variable Trait</option>
-                                    <option value="darkvision">Darkvision</option>
-                                    <option value="skill">Skill Proficiency</option>
-                                </select>
-
-
-                                {customRaceTrait === "skill" && (
-                                    <select value={customRaceSkill} onChange={e => setCustomRaceSkill(e.target.value)} className="p-2 bg-slate-800 rounded w-full">
-                                        <option value="">Choose Skill</option>
-                                        {availableSkills.map(skill => (
-                                            <option key={skill.index} value={skill.name}>{skill.name}</option>
+                                    <select value={customRaceASI} onChange={e => setCustomRaceASI(e.target.value)} className="p-2 bg-slate-800 rounded w-full mb-2">
+                                        <option value="">+2 Ability Score</option>
+                                        {Object.keys(abilities).map(stat => (
+                                        <option key={stat} value={stat}>{stat}</option>
                                         ))}
                                     </select>
-                                )}
-                            </div>
-                        )}
-                    </div>
-                    <div className="flex flex-col items-center">
-                        {charBackground === "Custom Background" && (
-                            <SkillSelect
-                                skills={allSkills}
-                                selected={customBackgroundSkills}
-                                setSelected={setCustomBackgroundSkills}
-                                max={2}
-                            />
-                        )}
+
+
+                                    <select value={customRaceTrait} onChange={e => setCustomRaceTrait(e.target.value)} className="p-2 bg-slate-800 rounded w-full mb-2">
+                                        <option value="">Variable Trait</option>
+                                        <option value="darkvision">Darkvision</option>
+                                        <option value="skill">Skill Proficiency</option>
+                                    </select>
+
+
+                                    {customRaceTrait === "skill" && (
+                                        <select value={customRaceSkill} onChange={e => setCustomRaceSkill(e.target.value)} className="p-2 bg-slate-800 rounded w-full">
+                                            <option value="">Choose Skill</option>
+                                            {availableSkills.map(skill => (
+                                                <option key={skill.index} value={skill.name}>{skill.name}</option>
+                                            ))}
+                                        </select>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                        <div className="flex flex-col items-center">
+                            {charBackground === "Custom Background" && (
+                                <SkillSelect
+                                    skills={allSkills}
+                                    selected={customBackgroundSkills}
+                                    setSelected={setCustomBackgroundSkills}
+                                    max={2}
+                                />
+                            )}
+                        </div>
                     </div>
                 </div>
-
                 <div className="flex gap-2 p-4">
                     <button onClick={changeToBase} className="px-4 py-2 bg-gray-600 rounded">Cancel</button>
                     <button
