@@ -350,12 +350,15 @@ export default function Home() {
             setAbilities(prev => {
                 newValue = Number(newValue);
 
+                // Find the stat currently using the selected value
                 const swapStat = Object.keys(prev).find(
                     key => key !== stat && prev[key] === newValue
                 );
 
+                // Clone abilities
                 const updated = { ...prev };
 
+                // Swap values if needed
                 if (swapStat) {
                     updated[swapStat] = prev[stat];
                 }
@@ -513,53 +516,53 @@ export default function Home() {
                 onChange={e => setName(e.target.value)}
                 />
                 <div className="flex flex-row">
-                    <div className="flex flex-col items-center">
+                    <div className="flex flex-col">
                         <Select label="Race" value={charRace} onChange={setCharRace} options={races} />
                         <Select label="Class" value={charClass} onChange={setCharClass} options={classes} />
                         <Select label="Background" value={charBackground} onChange={setCharBackground} options={backgrounds} />
+                    </div>
 
-                        <div className="flex flex-row gap-4">
-                            {charRace === "Custom Lineage" && (
-                                <div className="border-2 border-black p-4 m-4 rounded-2xl w-80 text-center">
-                                    <p className="text-amber-400 font-semibold mb-2">Custom Lineage</p>
+                    <div className="flex flex-row gap-4">
+                        {charRace === "Custom Lineage" && (
+                            <div className="border-2 border-black p-4 m-4 rounded-2xl w-80 text-center">
+                                <p className="text-amber-400 font-semibold mb-2">Custom Lineage</p>
 
 
-                                    <select value={customRaceASI} onChange={e => setCustomRaceASI(e.target.value)} className="p-2 bg-slate-800 rounded w-full mb-2">
-                                        <option value="">+2 Ability Score</option>
-                                        {Object.keys(abilities).map(stat => (
-                                        <option key={stat} value={stat}>{stat}</option>
+                                <select value={customRaceASI} onChange={e => setCustomRaceASI(e.target.value)} className="p-2 bg-slate-800 rounded w-full mb-2">
+                                    <option value="">+2 Ability Score</option>
+                                    {Object.keys(abilities).map(stat => (
+                                    <option key={stat} value={stat}>{stat}</option>
+                                    ))}
+                                </select>
+
+
+                                <select value={customRaceTrait} onChange={e => setCustomRaceTrait(e.target.value)} className="p-2 bg-slate-800 rounded w-full mb-2">
+                                    <option value="">Variable Trait</option>
+                                    <option value="darkvision">Darkvision</option>
+                                    <option value="skill">Skill Proficiency</option>
+                                </select>
+
+
+                                {customRaceTrait === "skill" && (
+                                    <select value={customRaceSkill} onChange={e => setCustomRaceSkill(e.target.value)} className="p-2 bg-slate-800 rounded w-full">
+                                        <option value="">Choose Skill</option>
+                                        {availableSkills.map(skill => (
+                                            <option key={skill.index} value={skill.name}>{skill.name}</option>
                                         ))}
                                     </select>
+                                )}
+                            </div>
 
+                        )}
 
-                                    <select value={customRaceTrait} onChange={e => setCustomRaceTrait(e.target.value)} className="p-2 bg-slate-800 rounded w-full mb-2">
-                                        <option value="">Variable Trait</option>
-                                        <option value="darkvision">Darkvision</option>
-                                        <option value="skill">Skill Proficiency</option>
-                                    </select>
-
-
-                                    {customRaceTrait === "skill" && (
-                                        <select value={customRaceSkill} onChange={e => setCustomRaceSkill(e.target.value)} className="p-2 bg-slate-800 rounded w-full">
-                                            <option value="">Choose Skill</option>
-                                            {availableSkills.map(skill => (
-                                                <option key={skill.index} value={skill.name}>{skill.name}</option>
-                                            ))}
-                                        </select>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-                        <div className="flex flex-col items-center">
-                            {charBackground === "Custom Background" && (
-                                <SkillSelect
-                                    skills={allSkills}
-                                    selected={customBackgroundSkills}
-                                    setSelected={setCustomBackgroundSkills}
-                                    max={2}
-                                />
-                            )}
-                        </div>
+                        {charBackground === "Custom Background" && (
+                            <SkillSelect
+                                skills={allSkills}
+                                selected={customBackgroundSkills}
+                                setSelected={setCustomBackgroundSkills}
+                                max={2}
+                            />
+                        )}
                     </div>
                 </div>
                 <div className="flex gap-2 p-4">
