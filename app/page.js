@@ -57,7 +57,7 @@ export default function Home() {
         </div>
 
           <div className="flex">
-            <select id="menu-select" value={menu} onChange={handleMenuChange} className="cursor-pointer bg-red-700 hover:bg-red-600 text-white font-bold p-2 px-4 rounded w-35 h-15 mt-8 ml-8 text-center">
+            <select id="menu-select" value={menu} onChange={handleMenuChange} className="appearance-none cursor-pointer bg-red-700 hover:bg-red-600 text-white font-bold p-2 px-4 rounded w-35 h-15 mt-8 ml-8 text-center text-wrap">
               <option value="home" className={optionClass}>Home</option>
               <option value="charSheet" className={optionClass}>Character Sheets</option>
               <option value="monster" className={optionClass}>Monsters</option>

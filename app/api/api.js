@@ -46,13 +46,6 @@ export async function getAllBackgrounds() {
   return backgroundIndexes.results;
 }
 
-export async function getAllSkills() {
-  const skillIndexes = await fetch(BASE_URL + "/api/skills")
-    .then(res => res.json());
-
-  return skillIndexes.results;
-}
-
 export async function getAllProficiencies() {
   const proficiencyIndexes = await fetch(BASE_URL + "/api/proficiencies")
     .then(res => res.json());
@@ -67,3 +60,10 @@ export async function getAllLanguages() {
   return languageIndexes.results;
 }
 
+export async function getClassDetails(classIndex) {
+    const res = await fetch(`https://www.dnd5eapi.co/api/2014/classes/${classIndex}`);
+    if (!res.ok) {
+        throw new Error("Failed to fetch class details");
+    }
+    return res.json();
+}
