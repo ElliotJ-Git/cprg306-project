@@ -6,7 +6,7 @@ import characterCard from "./characterCard";
 
 export default function monster() {
     const router = useRouter();
-    const [characters, setcharacters] = useState([]);
+    const [characters, setCharacters] = useState([]);
     const [search, setSearch] = useState("");
 
     useEffect(() => {
