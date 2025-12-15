@@ -3,11 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import characterSheet from "./characterSheet";
-import { getAllCharacters } from "./create/page";
 
 export default function monster() {
     const router = useRouter();
-    const [open, setOpen] = useState(false);
     const [characters, setcharacters] = useState([]);
     const [search, setSearch] = useState("");
 
