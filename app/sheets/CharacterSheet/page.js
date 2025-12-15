@@ -4,7 +4,7 @@ export default function CharacterSheet(){
 
     return(
         <main>
-        <p>Hi!</p>
+            <p>Hi!</p>
         </main>
     )
 }

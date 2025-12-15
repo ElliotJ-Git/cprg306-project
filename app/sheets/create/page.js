@@ -36,6 +36,8 @@ export default function Home() {
     const [abilityMethod, setAbilityMethod] = useState("standard");
     const [allSkills, setAllSkills] = useState([]);
 
+    const [username, setUsername] = useState(null);
+
     const [abilities, setAbilities] = useState({
         STR: 15,
         DEX: 14,
@@ -151,11 +153,13 @@ export default function Home() {
 
     useEffect(() => {
         const user = localStorage.getItem("username");
+
         if (!user) {
             router.push("/login");
+        } else {
+            setUsername(user);
         }
     }, [router]);
-
 
     useEffect(() => {
         getAllRaces().then(data => {
@@ -772,6 +776,7 @@ export default function Home() {
                     </button>
 
                     <button
+                        disabled={!username}
                         onClick={async () => {
                             const character = {
                                 name,
@@ -783,7 +788,7 @@ export default function Home() {
                                 skills: allSkillRows,
                             };
 
-                            await fetch("/api/characters/save", {
+                            const res = await fetch("/api/characters/save", {
                                 method: "POST",
                                 headers: {
                                     "Content-Type": "application/json",
@@ -794,12 +799,16 @@ export default function Home() {
                                 }),
                             });
 
-
+                            if (res.ok) {
+                                router.push("../"); 
+                            } else {
+                            }
                         }}
-                        className="px-4 py-2 bg-amber-600 rounded font-bold hover:bg-amber-500"
+                        className="px-4 py-2 bg-amber-600 rounded font-bold hover:bg-amber-500 disabled:opacity-50"
                     >
                         Save Character
                     </button>
+
                 </div>
             </div>
         );}
